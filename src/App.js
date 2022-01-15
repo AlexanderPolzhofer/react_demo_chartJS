@@ -1,25 +1,45 @@
 import React, { useEffect, useState } from 'react';
-
 import './App.css';
+
+
+import BarChart from './components/Barchart.component';
 
 const App = () => {
 
-  const [assets, setAssets] = useState([]);
+  const [chartData, setChartData] = useState({});
 
   useEffect(() => {
 
     const url = 'https://api.coincap.io/v2/assets';
 
     const dataFetching = async () => {
-      const coincapData = await fetch(url);
-      const response = await coincapData.json();
+      const response = await fetch(url);
+      const data = await response.json();
 
-      setAssets(response.data);
-    }
+      setChartData({
+        labels: data.data.map(crypto => crypto.name),
+        datasets: [
+          {
+            label: 'Price in USD',
+            data: data.data.map(crypto => crypto.priceUsd),
+            backgroundColor: [
+              '#ffbb11',
+              '#ecf0f1',
+              '#50AF95',
+              '#f3ba2f',
+              '#2a71d0'
+            ],
+            borderWidth: 1
+          }
+        ]
+      });
+    };
 
     dataFetching();
 
   }, []);
+
+
 
   return (
     <div className="App">
@@ -27,9 +47,7 @@ const App = () => {
         <h1>Data visualization ChartJS</h1>
       </div>
       <div className='App-content'>
-        {
-          assets.map(asset => <pre key={asset.id}>{asset.id}</pre>)
-        }
+        <BarChart chartData={chartData} />
       </div>
     </div>
   );
