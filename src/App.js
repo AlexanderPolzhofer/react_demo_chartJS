@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+
 import './App.css';
 
-function App() {
+const App = () => {
+
+  const [assets, setAssets] = useState([]);
+
+  useEffect(() => {
+
+    const url = 'https://api.coincap.io/v2/assets';
+
+    const dataFetching = async () => {
+      const coincapData = await fetch(url);
+      const response = await coincapData.json();
+
+      setAssets(response.data);
+    }
+
+    dataFetching();
+
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='App-header'>
+        <h1>Data visualization ChartJS</h1>
+      </div>
+      <div className='App-content'>
+        {
+          assets.map(asset => <pre key={asset.id}>{asset.id}</pre>)
+        }
+      </div>
     </div>
   );
 }
