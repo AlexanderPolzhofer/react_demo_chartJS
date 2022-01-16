@@ -7,10 +7,11 @@ import BarChart from './components/Barchart.component';
 const App = () => {
 
   const [chartData, setChartData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
 
-    const url = 'https://api.coincap.io/v2/assets';
+    const url = 'https://api.coincap.io/v2/assets/?limit=5';
 
     const dataFetching = async () => {
       const response = await fetch(url);
@@ -33,13 +34,12 @@ const App = () => {
           }
         ]
       });
+      setIsLoading(false);
     };
 
     dataFetching();
 
   }, []);
-
-
 
   return (
     <div className="App">
@@ -47,7 +47,10 @@ const App = () => {
         <h1>Data visualization ChartJS</h1>
       </div>
       <div className='App-content'>
-        <BarChart chartData={chartData} />
+        {
+          isLoading ? '...loading' : <BarChart chartData={chartData} />
+        }
+
       </div>
     </div>
   );
