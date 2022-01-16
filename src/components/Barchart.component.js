@@ -1,9 +1,13 @@
-import { BarController } from 'chart.js';
+import { BarController, CategoryScale, LinearScale } from 'chart.js';
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 
-Chart.register(BarController);
+Chart.register(
+    BarController,
+    CategoryScale,
+    LinearScale
+);
 
 const BarChart = ({ chartData }) => {
 
