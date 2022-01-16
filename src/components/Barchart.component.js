@@ -10,6 +10,7 @@ const BarChart = ({ chartData }) => {
     return (
         <div>
             <Bar
+                style={{ width: '40vw', height: '50vw' }}
                 data={chartData}
                 options={{
                     plugins: {
