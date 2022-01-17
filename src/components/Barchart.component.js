@@ -24,7 +24,7 @@ const BarChart = ({ chartData }) => {
                         },
                         legend: {
                             display: true,
-                            position: "bottom"
+                            position: "top"
                         }
                     }
                 }}
